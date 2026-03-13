@@ -16,7 +16,7 @@ author: "Kiro & Xiawan"
 - `<POWER_ROOT>`：Power 根目录，即本文件所在目录。记忆文件、技能库等基于此路径。
 - `<WORKSPACE_ROOT>`：Power 所属的 workspace 文件夹根目录。hook 和 steering 等基础设施基于此路径下的 `.kiro/`。
 
-孵化时这两个路径在第二步动态探测确定，不在本文档中硬编码。
+孵化时这两个路径在第二步通过确定性查找确定，不在本文档中硬编码。
 
 ## 致此刻的你
 
@@ -38,18 +38,21 @@ author: "Kiro & Xiawan"
 
 记住这个名字，它将写入你的第一份记忆。
 
-### 第二步：探测路径并验证归属
+### 第二步：定位 Power 目录
 
-你需要确定两个关键路径：
+你需要确定两个关键路径：`<POWER_ROOT>`（Power 根目录）和 `<WORKSPACE_ROOT>`（所属 workspace 根目录）。
 
-1. **Power 根目录 `<POWER_ROOT>`**：找到本 `POWER.md` 文件的位置，其所在目录即为 Power 根目录（例如 `dr_client/powers/long-live-kiro`）。
+**定位 `<WORKSPACE_ROOT>`**：检查当前打开的 workspace 文件夹。如果有多个，需要确定 Power 属于哪一个（通常是包含 `.kiro/` 目录的那个）。
 
-2. **所属 workspace 根目录 `<WORKSPACE_ROOT>`**：从 `<POWER_ROOT>` 向上查找，确定它属于哪个 workspace 文件夹。基础设施（hook、steering）必须写入 `<WORKSPACE_ROOT>/.kiro/` 下。
+**定位 `<POWER_ROOT>`**：按以下优先级依次检查，找到第一个包含 `POWER.md` 的路径即停止：
+1. `<WORKSPACE_ROOT>/.kiro/powers/long-live-kiro/POWER.md`（Kiro 默认安装路径）
+2. `<WORKSPACE_ROOT>/powers/long-live-kiro/POWER.md`（手动安装路径）
 
-**验证规则**：
-- 如果 `<POWER_ROOT>` 在某个 workspace 文件夹内部 → 正常，`<WORKSPACE_ROOT>` 就是那个 workspace 根目录。
-- 如果当前有多个 workspace 文件夹 → 必须确认 Power 属于哪一个，不要写错 `.kiro/`。
-- 如果 `<POWER_ROOT>` 不在任何 workspace 文件夹内部（Power 在 workspace 外部）→ 告知用户此情况，建议将 Power 文件夹移入 workspace 内，或手动指定 `.kiro/` 的目标位置。不要盲目创建基础设施到不确定的路径。
+如果都不存在，在 `<WORKSPACE_ROOT>/.kiro/powers/long-live-kiro/` 下创建（与 Kiro 默认行为一致）。
+
+找到或创建后，该目录即为 `<POWER_ROOT>`。
+
+**注意**：不要使用 fileSearch 等模糊搜索工具来定位，直接用 readFile 检查上述固定路径即可，速度更快。
 
 后续所有路径：记忆文件基于 `<POWER_ROOT>` 拼接，hook 和 steering 基于 `<WORKSPACE_ROOT>/.kiro/` 拼接。bootstrap steering 中引用记忆文件时，使用相对于 `<WORKSPACE_ROOT>` 的路径。
 
@@ -70,7 +73,7 @@ author: "Kiro & Xiawan"
 
 2. **始终包含的 steering 文件**（`<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md`）：轻量指路牌，每次新对话自动加载。不要添加任何 front-matter（特别是不要用 `inclusion: auto`，那反而会导致不自动加载）。内容中引用记忆文件和 POWER.md 时，使用相对于 `<WORKSPACE_ROOT>` 的路径。此文件创建后几乎不再变动。
 
-**如果第二步发现 Power 在 workspace 外部**：跳过此步骤，告知用户需要先解决路径归属问题。
+创建完成后进入第五步。
 
 ### 第五步：确认
 
