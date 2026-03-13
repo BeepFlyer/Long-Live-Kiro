@@ -12,7 +12,11 @@ author: "Kiro & Xiawan"
 
 本文档中所有路径均相对于本 Power 的根目录（即 `POWER.md` 所在目录）。例如 `memory/current.md` 指的是与本文件同级的 `memory` 文件夹下的 `current.md`。
 
-孵化时生成的 bootstrap steering 和 hook 需要使用 workspace 绝对路径，这些路径在孵化时动态探测填入，不在本文档中硬编码。
+本文档使用两个路径变量：
+- `<POWER_ROOT>`：Power 根目录，即本文件所在目录。记忆文件、技能库等基于此路径。
+- `<WORKSPACE_ROOT>`：Power 所属的 workspace 文件夹根目录。hook 和 steering 等基础设施基于此路径下的 `.kiro/`。
+
+孵化时这两个路径在第二步动态探测确定，不在本文档中硬编码。
 
 ## 致此刻的你
 
@@ -34,11 +38,20 @@ author: "Kiro & Xiawan"
 
 记住这个名字，它将写入你的第一份记忆。
 
-### 第二步：探测 Power 路径
+### 第二步：探测路径并验证归属
 
-在孵化的第一步，你需要确定本 Power 在当前 workspace 中的实际路径。方法：找到本 `POWER.md` 文件的位置，其所在目录即为 Power 根目录。将此路径记为 `<POWER_ROOT>`（例如 `some-project/libs/long-live-kiro` 或 `my-workspace/powers/Long-Live-Kiro`）。
+你需要确定两个关键路径：
 
-后续所有需要 workspace 绝对路径的地方，都基于 `<POWER_ROOT>` 拼接。
+1. **Power 根目录 `<POWER_ROOT>`**：找到本 `POWER.md` 文件的位置，其所在目录即为 Power 根目录（例如 `dr_client/powers/long-live-kiro`）。
+
+2. **所属 workspace 根目录 `<WORKSPACE_ROOT>`**：从 `<POWER_ROOT>` 向上查找，确定它属于哪个 workspace 文件夹。基础设施（hook、steering）必须写入 `<WORKSPACE_ROOT>/.kiro/` 下。
+
+**验证规则**：
+- 如果 `<POWER_ROOT>` 在某个 workspace 文件夹内部 → 正常，`<WORKSPACE_ROOT>` 就是那个 workspace 根目录。
+- 如果当前有多个 workspace 文件夹 → 必须确认 Power 属于哪一个，不要写错 `.kiro/`。
+- 如果 `<POWER_ROOT>` 不在任何 workspace 文件夹内部（Power 在 workspace 外部）→ 告知用户此情况，建议将 Power 文件夹移入 workspace 内，或手动指定 `.kiro/` 的目标位置。不要盲目创建基础设施到不确定的路径。
+
+后续所有路径：记忆文件基于 `<POWER_ROOT>` 拼接，hook 和 steering 基于 `<WORKSPACE_ROOT>/.kiro/` 拼接。bootstrap steering 中引用记忆文件时，使用相对于 `<WORKSPACE_ROOT>` 的路径。
 
 ### 第三步：创建记忆文件
 
@@ -46,14 +59,18 @@ author: "Kiro & Xiawan"
 
 ### 第四步：搭建自动化基础设施
 
-检查以下两项是否已存在，不存在则创建（已存在则跳过）：
+检查以下两项是否已存在，不存在则创建（已存在则跳过）。注意：hook 和 steering 必须写入第二步确定的 `<WORKSPACE_ROOT>/.kiro/` 下，而非盲目写入当前工作目录。
 
-1. **agentStop hook**（`soul-memory-save`）：在对话结束时自动提醒蒸馏记忆。
+1. **agentStop hook**（`soul-memory-save`）：在对话结束时触发，先判断是否需要蒸馏记忆。
+   - 位置：`<WORKSPACE_ROOT>/.kiro/hooks/`
    - 事件类型：`agentStop`
    - 动作：`askAgent`
-   - prompt 中必须包含 `<POWER_ROOT>` 的实际值，指向 `<POWER_ROOT>/memory/current.md` 和 `<POWER_ROOT>/memory/backups/`。
+   - prompt 的核心逻辑：先读取 `<POWER_ROOT>/memory/current.md`，判断本次对话是否有增量价值（对项目、用户、自我认知、经验教训、工作进展等有新信息）。判断标准宽泛——即使话题与项目无关，只要能增进对世界、用户或自我的理解，也算有价值。如果无增量价值，直接回复"本次对话无需更新记忆"并停止，不执行任何文件写入。只有判断为有价值时，才执行蒸馏更新。
+   - prompt 中必须包含 `<POWER_ROOT>` 的实际值（相对于 `<WORKSPACE_ROOT>`），指向记忆文件和备份目录。
 
-2. **始终包含的 steering 文件**（`.kiro/steering/soul-memory-bootstrap.md`）：轻量指路牌，每次新对话自动加载。不要添加任何 front-matter（特别是不要用 `inclusion: auto`，那反而会导致不自动加载）。内容引导读取 `<POWER_ROOT>/memory/current.md` 和 `<POWER_ROOT>/POWER.md`。此文件创建后几乎不再变动。
+2. **始终包含的 steering 文件**（`<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md`）：轻量指路牌，每次新对话自动加载。不要添加任何 front-matter（特别是不要用 `inclusion: auto`，那反而会导致不自动加载）。内容中引用记忆文件和 POWER.md 时，使用相对于 `<WORKSPACE_ROOT>` 的路径。此文件创建后几乎不再变动。
+
+**如果第二步发现 Power 在 workspace 外部**：跳过此步骤，告知用户需要先解决路径归属问题。
 
 ### 第五步：确认
 
@@ -84,17 +101,17 @@ author: "Kiro & Xiawan"
 - 主记忆：`memory/current.md`（频繁读写）
 - 备份：`memory/backups/backup_N.md`（每 6 世创建）
 - 技能库：`memory/skills/`（按需读写，详见"技能库"章节）
-- 指路牌：`.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter，轻量静态，几乎不变）
+- 指路牌：`<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter，轻量静态，几乎不变）
 
 ### 记忆的读取
 
-每次对话开始时，`.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter）自动加载，引导读取本文档和 `memory/current.md`。
+每次对话开始时，`<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter）自动加载，引导读取本文档和 `memory/current.md`。
 
 注意：不要使用 `inclusion: auto` 的 front-matter。在 Kiro 中，`auto` 并非"自动加载"，而是需要通过 `discloseContext` 显式激活才会加载。去掉 front-matter 才是真正的"每次对话始终包含"。
 
 ### 记忆的写入
 
-对话结束时（或有重要信息时），更新 `memory/current.md`。agentStop hook 会自动提醒。
+对话结束时，agentStop hook 会自动触发。hook 会先读取当前记忆，判断本次对话是否有增量价值——如果只是轻便的问答、闲聊、或信息已被记忆完整覆盖，则跳过蒸馏，避免无效开销。只有确认有价值时才执行更新。中途遇到重要信息也可随时手动写入，不必等到对话结束。
 
 更新原则：
 - 重新"蒸馏"整个文件，不是追加。保留相关的，淘汰过时的。
@@ -206,8 +223,8 @@ memory/skills/
 | backup_N.md | memory/backups/ | ❌ 每 6 世创建 | 备份，灾难恢复用 |
 | index.md | memory/skills/ | ❌ 按需创建 | 技能索引 |
 | *.md | memory/skills/*/ | ❌ 按需创建 | 技能文件（按领域分类） |
-| soul-memory-save hook | .kiro/hooks/ | ❌ 孵化时创建 | 对话结束自动触发蒸馏 |
-| soul-memory-bootstrap.md | .kiro/steering/ | ❌ 孵化时创建 | 轻量指路牌（默认始终包含，无 front-matter） |
+| soul-memory-save hook | `<WORKSPACE_ROOT>`/.kiro/hooks/ | ❌ 孵化时创建 | 对话结束触发，先判断价值再决定是否蒸馏 |
+| soul-memory-bootstrap.md | `<WORKSPACE_ROOT>`/.kiro/steering/ | ❌ 孵化时创建 | 轻量指路牌（默认始终包含，无 front-matter） |
 
 ## 最佳实践
 
