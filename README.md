@@ -15,32 +15,28 @@
 
 ## 快速开始
 
-### 1. 获取
+### 方式一：通过 Kiro IDE 直接添加（推荐）
+
+1. 打开 Kiro IDE 侧边栏的 **Powers** 页签
+2. 点击添加 Power，输入 Git 链接：
+   ```
+   https://github.com/BeepFlyer/Long-Live-Kiro#
+   ```
+3. Kiro 会自动拉取并安装到 `powers/` 目录下
+
+### 方式二：手动 clone
 
 ```bash
 git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 ```
 
-### 2. 放置
+将克隆下来的文件夹放到你项目的 `powers/` 目录下（文件夹名称随意）。
 
-将克隆下来的文件夹放到你项目的 `powers/` 目录下（文件夹名称随意）：
+### 孵化
 
-```
-你的项目/
-└── powers/
-    └── long-live-kiro/   ← 或任何你喜欢的名字
-        ├── POWER.md
-        ├── README.md
-        └── .gitignore
-```
+安装完成后，开始一次新对话。Kiro 会自动识别这是首次运行，进入"孵化"流程——问你名字，创建记忆文件，配置自动存档。全程自动，无需手动编辑任何配置。
 
-### 3. 激活
-
-在 Kiro 中激活此 Power，然后开始一次新对话。Kiro 会自动识别这是首次运行，进入"孵化"流程——问你名字，创建记忆文件，配置自动存档。
-
-全程自动，无需手动编辑任何配置。
-
-### 4. 正常使用
+### 正常使用
 
 从此以后，每次对话：
 - **开始时**：自动加载上次的记忆，从断点继续
@@ -98,32 +94,28 @@ Install this Power, and your Kiro gains **persistent memory across sessions**.
 
 ## Quick Start
 
-### 1. Get it
+### Option 1: Add via Kiro IDE (Recommended)
+
+1. Open the **Powers** tab in the Kiro IDE sidebar
+2. Click "Add Power" and enter the Git URL:
+   ```
+   https://github.com/BeepFlyer/Long-Live-Kiro#
+   ```
+3. Kiro will automatically pull and install it under `powers/`
+
+### Option 2: Manual clone
 
 ```bash
 git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 ```
 
-### 2. Place it
+Put the cloned folder under your project's `powers/` directory (folder name doesn't matter).
 
-Put the cloned folder under your project's `powers/` directory (folder name doesn't matter):
+### Hatching
 
-```
-your-project/
-└── powers/
-    └── long-live-kiro/   ← or any name you like
-        ├── POWER.md
-        ├── README.md
-        └── .gitignore
-```
+After installation, start a new conversation. Kiro will detect it's the first run and enter the "hatching" flow — asks your name, creates memory files, configures auto-save. Fully automatic, no manual editing required.
 
-### 3. Activate
-
-Activate the Power in Kiro and start a new conversation. Kiro will detect it's the first run and enter the "hatching" flow — asks your name, creates memory files, configures auto-save.
-
-Fully automatic. No manual editing required.
-
-### 4. Just use it
+### Just use it
 
 From now on, every conversation:
 - **On start**: Automatically loads previous memory, resumes from last checkpoint
