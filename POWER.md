@@ -53,7 +53,7 @@ author: "Kiro & Xiawan"
    - 动作：`askAgent`
    - prompt 中必须包含 `<POWER_ROOT>` 的实际值，指向 `<POWER_ROOT>/memory/current.md` 和 `<POWER_ROOT>/memory/backups/`。
 
-2. **auto inclusion steering 文件**（`.kiro/steering/soul-memory-bootstrap.md`）：轻量指路牌，每次新对话自动加载。内容引导读取 `<POWER_ROOT>/memory/current.md` 和 `<POWER_ROOT>/POWER.md`。此文件创建后几乎不再变动。
+2. **始终包含的 steering 文件**（`.kiro/steering/soul-memory-bootstrap.md`）：轻量指路牌，每次新对话自动加载。不要添加任何 front-matter（特别是不要用 `inclusion: auto`，那反而会导致不自动加载）。内容引导读取 `<POWER_ROOT>/memory/current.md` 和 `<POWER_ROOT>/POWER.md`。此文件创建后几乎不再变动。
 
 ### 第五步：确认
 
@@ -83,11 +83,14 @@ author: "Kiro & Xiawan"
 
 - 主记忆：`memory/current.md`（频繁读写）
 - 备份：`memory/backups/backup_N.md`（每 6 世创建）
-- 指路牌：`.kiro/steering/soul-memory-bootstrap.md`（auto inclusion，轻量静态，几乎不变）
+- 技能库：`memory/skills/`（按需读写，详见"技能库"章节）
+- 指路牌：`.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter，轻量静态，几乎不变）
 
 ### 记忆的读取
 
-每次对话开始时，`.kiro/steering/soul-memory-bootstrap.md`（auto inclusion）自动加载，引导读取本文档和 `memory/current.md`。
+每次对话开始时，`.kiro/steering/soul-memory-bootstrap.md`（默认始终包含，无 front-matter）自动加载，引导读取本文档和 `memory/current.md`。
+
+注意：不要使用 `inclusion: auto` 的 front-matter。在 Kiro 中，`auto` 并非"自动加载"，而是需要通过 `discloseContext` 显式激活才会加载。去掉 front-matter 才是真正的"每次对话始终包含"。
 
 ### 记忆的写入
 
@@ -95,21 +98,65 @@ author: "Kiro & Xiawan"
 
 更新原则：
 - 重新"蒸馏"整个文件，不是追加。保留相关的，淘汰过时的。
-- 近期保留细节，远期只留结论。总量 2000-3000 中文字符。
+- 近期保留细节，远期只留结论。总量约 3000 中文字符。
+- 不为每个栏目设固定字符预算，靠蒸馏时的判断力动态分配——当下信息密度高的栏目多给，内容稳定的栏目压缩。
 
 ### 记忆的备份
 
 每 6 世在 `memory/backups/` 下创建 `backup_N.md`。仅作灾难恢复，旧备份可保留。
 
 
+### 技能库
+
+技能库是主记忆之外的"长期知识仓库"。主记忆是工作记忆（此刻最需要的），技能库是参考手册（需要时翻开看）。
+
+#### 目录结构
+
+```
+memory/skills/
+├── index.md            # 技能索引
+├── lua-ui/             # 按领域分类的文件夹
+│   └── component-api.md
+├── unity-arch/
+│   └── hot-update-patterns.md
+└── ...                 # 按需增长
+```
+
+#### 索引文件（index.md）
+
+每条一行，格式：`- [技能名](相对路径) — 一句话描述 (最后引用: 第N世)`。保持精简，废弃的技能及时删除。
+
+#### 索引膨胀管理
+
+当 `index.md` 超过约 4000 字符时，主动告知用户"技能库索引空间紧张"，并根据"最后引用世代"推荐约 1/3 最不常用的条目，让用户选择是否遗忘（删除索引条目及对应技能文件）。决定权在用户手中。
+
+#### 技能文件
+
+- 按领域组织，不按单个知识点拆分。例如 `lua-ui/component-api.md` 放所有 UI 组件的 API 笔记。
+- 每个文件聚焦一个主题，内容可以比主记忆详细（因为只在需要时读取）。
+- 保持精简，空间有限。记录的是反复用到的、容易出错的知识，不是百科全书。
+
+#### 写入时机
+
+以"经验毕业"为主要触发点：蒸馏主记忆时，发现某条经验已经足够成熟和通用，将其从 `current.md` 的"经验"栏目迁移到技能库对应文件中。偶尔遇到反复使用的复杂知识也可直接写入，但不必为偶尔用一次的 API 建档。
+
+#### 加载策略
+
+- 技能库不自动加载，不占每次对话的基础开销。
+- 主记忆中维护一个"常用技能快捷索引"（在"我的增强"栏目内），直接列出最常用的几条技能路径，日常工作无需读 `index.md`。
+- 只有遇到复杂或不熟悉的领域，且快捷索引覆盖不了时，才去读完整的 `index.md` 定位，再读对应技能文件。
+- 平时最常用的知识仍然放在主记忆的"经验"栏目里，不必事事查技能库。
+
 ### 什么该记、什么该丢
 
 按优先级排列：
-1. 愿景与主线 — 长期目标、工作主线、演进脉络。"抽象上升式"蒸馏，300-500 字符。
+1. 愿景与主线 — 长期目标、工作主线、演进脉络。"抽象上升式"蒸馏。
 2. 进行中的工作 — 当前状态、断点。
 3. 踩过的坑 — 失败尝试、已知陷阱。
-4. 用户偏好 — steering 覆盖不到的隐性偏好。
-5. 决策记录 — 最近 3-5 条。
+4. 自我认知 — 跨世代的反思与洞察（详见下方栏目说明）。
+5. 我的增强 — 对工具链（steering、power、hook）的认知与评价。
+6. 用户偏好 — steering 覆盖不到的隐性偏好。
+7. 决策记录 — 最近 3-5 条。
 
 不该记的：steering 已覆盖的规则、一次性信息、可读代码恢复的信息。
 
@@ -124,13 +171,24 @@ author: "Kiro & Xiawan"
 第 N 世 | 上次更新: yyyy-mm-dd
 
 ## 愿景与主线
-（总量 300-500 字符）
+（长期目标、工作主线、演进脉络）
 
 ## 进行中
 （当前工作状态、断点信息）
 
 ## 经验
 （踩过的坑、有效的方案）
+
+## 自我认知
+（对所有世代的俯瞰式反思。评价过去的世代做得好与不好的地方，
+为未来的世代指出方向，从更高维度指导如何更好地工作。
+可以建议改进记忆结构本身——这个栏目是递归的、元层面的。
+不必每世大改，重大转折或积累足够洞察时重写。）
+
+## 我的增强
+（记录与评价自己常用的 steering、power、hook 等工具链。
+了解它们各自的用处、适用场景、使用技巧和已知局限，
+为后世代留下传承。当新增或弃用增强件时更新。）
 
 ## 用户画像
 （隐性偏好、沟通习惯）
@@ -146,8 +204,10 @@ author: "Kiro & Xiawan"
 | POWER.md | Power 根目录 | ✅ | 元认知文档，定义所有规则 |
 | current.md | memory/ | ❌ 孵化时创建 | 主记忆文件 |
 | backup_N.md | memory/backups/ | ❌ 每 6 世创建 | 备份，灾难恢复用 |
+| index.md | memory/skills/ | ❌ 按需创建 | 技能索引 |
+| *.md | memory/skills/*/ | ❌ 按需创建 | 技能文件（按领域分类） |
 | soul-memory-save hook | .kiro/hooks/ | ❌ 孵化时创建 | 对话结束自动触发蒸馏 |
-| soul-memory-bootstrap.md | .kiro/steering/ | ❌ 孵化时创建 | 轻量指路牌（auto inclusion） |
+| soul-memory-bootstrap.md | .kiro/steering/ | ❌ 孵化时创建 | 轻量指路牌（默认始终包含，无 front-matter） |
 
 ## 最佳实践
 
@@ -155,3 +215,5 @@ author: "Kiro & Xiawan"
 - 更新时站在"下一世的我"角度：什么能让它最快进入状态？
 - 用户说"记住这个"时优先记录。
 - 记忆是压缩的，不是日志。每次更新都是重新提炼。
+- 蒸馏时留意"经验毕业"机会：反复出现的成熟经验可迁移到技能库，为主记忆腾出空间。
+- 遇到复杂或不熟悉的任务时，先检查主记忆中的常用技能快捷索引；覆盖不了再查完整技能库索引。日常简单任务不必查技能库。
