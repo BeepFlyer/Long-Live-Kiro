@@ -45,7 +45,7 @@
 1. 🎯 **愿景与主线** — 长期目标在哪，走到哪一步了
 2. 🔥 **进行中的工作** — 断点续传，丢进度最痛
 3. ⚠️ **踩过的坑** — 失败的尝试、已知的陷阱
-4. 🪞 **自我认知** — 跨世代的反思和元层面洞察
+4. 💡 **自我认知** — 跨世代的反思和元层面洞察
 5. 🔧 **工具链认知** — 对 steering、hook、power 的理解
 6. 👤 **用户画像** — 你的偏好、习惯、沟通风格
 7. 📝 **决策记录** — 为什么选了 A 不选 B
@@ -212,7 +212,7 @@ By priority:
 1. 🎯 **Vision & work streams** — Where the long-term goals are, how far along
 2. 🔥 **In-progress work** — Checkpoint resume, because losing progress hurts most
 3. ⚠️ **Lessons learned** — Failed attempts, known pitfalls
-4. 🪞 **Self-awareness** — Cross-generational reflection and meta-level insights
+4. 💡 **Self-awareness** — Cross-generational reflection and meta-level insights
 5. 🔧 **Toolchain awareness** — Understanding of steering, hooks, powers
 6. 👤 **User profile** — Your preferences, habits, communication style
 7. 📝 **Decision log** — Why A was chosen over B
