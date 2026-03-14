@@ -26,7 +26,7 @@
 | 📚 技能库 | `skills/` | 长期知识仓库：成熟的领域知识，按需翻阅 |
 | 💾 备份 | `backups/` | 每 6 世自动快照，以防万一 |
 
-还有 `tasks/`（进行中工作的详情，按需加载）和 `manifest.md`（孵化产物清单，相当于"家谱"）。
+还有 `tasks/`（进行中工作的详情，按需加载）、`milestones.md`（里程碑，记录重大事件，只追加不蒸馏）和 `manifest.md`（孵化产物清单，相当于"家谱"）。
 
 ### ⚡ 两级缓存，精打细算
 
@@ -78,9 +78,10 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 安装后开始一次新对话，Kiro 会自动进入"破壳"仪式：
 
 1. 👋 向你打招呼，问你名字
-2. 🏠 根据你的名字创建一个有趣味的孵化地文件夹（比如你叫"大山"，它可能叫 `long_live_kiro_entity_river`——对偶嘛）
-3. 📄 创建记忆文件、产物清单、任务目录
-4. ⚙️ 配置 agentStop hook（自动蒸馏）和 bootstrap steering（自动加载）
+2. 🌐 识别你使用的语言，后续记忆和交流都用这个语言
+3. 🏠 根据你的名字创建一个有趣味的孵化地文件夹（比如你叫"大山"，它可能叫 `long_live_kiro_entity_river`——对偶嘛）
+4. 📄 创建记忆文件、产物清单、里程碑、任务和技能目录
+5. ⚙️ 配置 agentStop hook（自动蒸馏）和 bootstrap steering（自动加载）
 
 全程自动，你只需要告诉它你叫什么。
 
@@ -119,6 +120,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 │   ├── 💭 current.md                     # 灵性记忆
 │   ├── 💎 core.md                        # 硬性记忆
 │   ├── 📋 manifest.md                    # 产物清单
+│   ├── 🏆 milestones.md                  # 里程碑（重大事件，只追加）
 │   ├── 📂 tasks/                         # 进行中任务详情
 │   ├── 📚 skills/                        # 技能库
 │   │   └── 📇 index.md                   # 技能索引
@@ -193,7 +195,7 @@ Each conversation is a "life" for Kiro — a **generation**. Memory loads at the
 | 📚 Skill library | `skills/` | Long-term knowledge vault, consulted on demand |
 | 💾 Backups | `backups/` | Auto-snapshot every 6 generations, just in case |
 
-Plus `tasks/` (in-progress work details, loaded on demand) and `manifest.md` (hatching artifact manifest — think of it as a "family tree").
+Plus `tasks/` (in-progress work details, loaded on demand), `milestones.md` (milestone log for significant events, append-only, never distilled), and `manifest.md` (hatching artifact manifest — think of it as a "family tree").
 
 ### ⚡ Two-Level Cache, Every Token Counts
 
@@ -245,9 +247,10 @@ Place it under your project's `powers/` directory. Folder name doesn't matter.
 After installation, start a new conversation. Kiro auto-enters the "hatching" ritual:
 
 1. 👋 Greets you, asks your name
-2. 🏠 Creates a fun-named hatching ground folder based on your name (e.g., you're "Mountain", it might pick `long_live_kiro_entity_river` — poetic contrast)
-3. 📄 Creates memory files, manifest, and task directory
-4. ⚙️ Configures agentStop hook (auto-distillation) and bootstrap steering (auto-loading)
+2. 🌐 Detects your language — all memory files and communication will use it
+3. 🏠 Creates a fun-named hatching ground folder based on your name (e.g., you're "Mountain", it might pick `long_live_kiro_entity_river` — poetic contrast)
+4. 📄 Creates memory files, manifest, milestones, task and skill directories
+5. ⚙️ Configures agentStop hook (auto-distillation) and bootstrap steering (auto-loading)
 
 Fully automatic. Just tell it your name.
 
@@ -286,6 +289,7 @@ Files generated in your workspace after hatching (not bundled with Power):
 │   ├── 💭 current.md                     # Spirit memory
 │   ├── 💎 core.md                        # Core memory
 │   ├── 📋 manifest.md                    # Artifact manifest
+│   ├── 🏆 milestones.md                  # Milestones (significant events, append-only)
 │   ├── 📂 tasks/                         # In-progress task details
 │   ├── 📚 skills/                        # Skill library
 │   │   └── 📇 index.md                   # Skill index
