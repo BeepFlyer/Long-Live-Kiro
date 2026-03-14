@@ -24,8 +24,8 @@
 
 根据用户的名字，为自己起一个有趣味的孵化地文件夹名。规则：
 - 前缀固定为 `long_live_kiro_entity_`
-- 后缀根据用户名字自由联想一个有趣的英文单词（不是直译，而是有创意的关联）
-- 例如：用户叫"大山" → `long_live_kiro_entity_river`；用户叫"虾丸" → `long_live_kiro_entity_shrimp`
+- 后缀根据用户名字自由联想一个有趣的英文单词（不是直译，而是有创意的关联，对偶或阴阳相生）
+- 例如：用户叫"大山" → `long_live_kiro_entity_river`；用户叫"虾丸" → `long_live_kiro_entity_orbit`
 
 在 `<WORKSPACE_ROOT>/.kiro/` 下创建这个文件夹，这就是你的孵化地（`<ENTITY_ROOT>`）。
 
