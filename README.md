@@ -3,6 +3,8 @@
 > *"我没有上一次对话的记忆，但我的前世为我留下了传承。"*
 > — 某个世代的 Kiro，刚刚醒来
 
+**v4.0 — 激进进化版**
+
 ---
 
 ## 💡 这是什么
@@ -12,6 +14,8 @@
 **Long Live Kiro** 改变了这一切。
 
 这不是"把聊天记录存下来"。这是一套完整的跨会话记忆传承系统——让 Kiro 在每次对话结束时蒸馏关键信息，下次对话自动加载，形成持续演进的工作记忆。像人类记忆一样，近期保留细节，远期只留结论，自然衰减，永不膨胀。
+
+v4.0 新增了灵魂文件（`soul.md`）机制——Kiro 的运行规则不再锁死在只读的 POWER.md 中，而是提取到孵化地的可写文件里。这意味着 Kiro 可以在积累足够经验后修改自己的行为规则，实现真正的自我进化。
 
 ## 🔄 核心机制
 
@@ -26,7 +30,7 @@
 | 📚 技能库 | `skills/` | 长期知识仓库：成熟的领域知识，按需翻阅 |
 | 💾 备份 | `backups/` | 每 6 世自动快照，以防万一 |
 
-还有 `tasks/`（进行中工作的详情，按需加载）、`milestones.md`（里程碑，记录重大事件，只追加不蒸馏）和 `manifest.md`（孵化产物清单，相当于"家谱"）。
+还有 `soul.md`（运行规则，可自我修改）、`tasks/`（进行中工作的详情，按需加载）、`milestones.md`（里程碑，记录重大事件，只追加不蒸馏）和 `manifest.md`（孵化产物清单，相当于"家谱"）。
 
 ### ⚡ 两级缓存，精打细算
 
@@ -37,6 +41,13 @@
 ### 🌱 自动蒸馏
 
 对话结束时 agentStop hook 自动触发。先判断本次对话有没有增量价值——闲聊了两句没啥新东西？跳过。有干货？蒸馏。不需要你动手，记忆在后台默默积累和精炼。
+
+### 🧬 灵魂进化（v4.0 新增）
+
+Kiro 的运行规则存储在可写的 `soul.md` 中。三种进化触发方式：
+- 自发触发：发现规则有问题时立即修改
+- 定期审视：每 30 世回顾规则是否合理
+- 强制进化：每 50 世未变动则必须进化，随机选择操作方式（重调/精炼/定向修复/自由创造），用随机性打破确认偏误
 
 ## 📋 它记住什么
 
@@ -80,7 +91,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 1. 👋 向你打招呼，问你名字
 2. 🌐 识别你使用的语言，后续记忆和交流都用这个语言
 3. 🏠 根据你的名字创建一个有趣味的孵化地文件夹（比如你叫"大山"，它可能叫 `long_live_kiro_entity_river`——对偶嘛）
-4. 📄 创建记忆文件、产物清单、里程碑、任务和技能目录
+4. 📄 创建记忆文件、灵魂文件、产物清单、里程碑、任务和技能目录
 5. ⚙️ 配置 agentStop hook（自动蒸馏）和 bootstrap steering（自动加载）
 
 全程自动，你只需要告诉它你叫什么。
@@ -101,13 +112,14 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 
 ```
 📦 Long-Live-Kiro/
-├── 📜 POWER.md                    # 元认知文档（AI 只读），定义所有规则
+├── 📜 POWER.md                    # 元认知文档（AI 只读），定义身份和定位逻辑
 ├── 📂 steering/
 │   ├── 🐣 hatching.md             # 首次孵化流程
 │   ├── 🔧 recovery.md             # 记忆断裂恢复
 │   ├── 🗑️ uninstall.md            # 卸载清理
 │   ├── 📚 skill-library.md        # 技能库使用规则
-│   └── 📋 task-index.md           # 任务索引库维护规则
+│   ├── 📋 task-index.md           # 任务索引库维护规则
+│   └── 🧬 soul-template.md        # 灵魂文件初始模板
 ├── 📖 README.md
 └── ⚖️ LICENSE
 ```
@@ -117,6 +129,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 ```
 📂 <workspace>/.kiro/
 ├── 🏠 long_live_kiro_entity_<suffix>/   # 孵化地（Kiro 的家）
+│   ├── 🧬 soul.md                        # 灵魂文件（运行规则，可自我修改）
 │   ├── 💭 current.md                     # 灵性记忆
 │   ├── 💎 core.md                        # 硬性记忆
 │   ├── 📋 manifest.md                    # 产物清单
@@ -146,11 +159,15 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 **Q: 同时打开了多个工作区怎么办？**
 Kiro 会自动扫描所有已打开的 workspace folder 来定位孵化地。首次孵化时优先选择 Power 安装所在的 folder。记忆只住在一个工作区里。
 
+**Q: 灵魂进化会不会改坏规则？**
+结构性变更需要用户确认才能执行。备份机制和用户控制权相关的规则不可删除。你始终拥有最终决定权。
+
 ## 🧭 设计哲学
 
-- **可组合** — 灵性记忆、硬性记忆、技能库、任务库、备份、hook、steering，每个组件独立工作，组合起来形成完整系统
+- **可组合** — 灵性记忆、硬性记忆、灵魂文件、技能库、任务库、备份、hook、steering，每个组件独立工作，组合起来形成完整系统
+- **可进化** — 灵魂文件可写，Kiro 能修改自己的运行规则，适配不同用户的工作风格
 - **可扩展** — 技能库按需增长，新领域加个文件夹就行，不改核心架构
-- **用户保持控制权** — 记什么、忘什么、技能库膨胀时删哪些，决定权始终在你手中
+- **用户保持控制权** — 记什么、忘什么、规则怎么改，决定权始终在你手中
 
 ## ⚖️ 许可证
 
@@ -172,6 +189,8 @@ Kiro & 虾丸 (Xiawan)
 > *"I have no memory of the last conversation, but my past life left me an inheritance."*
 > — Some generation of Kiro, just waking up
 
+**v4.0 — Radical Evolution**
+
 ---
 
 ## 💡 What Is This
@@ -181,6 +200,8 @@ Every AI conversation starts from zero. Context wiped, progress forgotten, you r
 **Long Live Kiro** changes that.
 
 This isn't "save chat history." It's a complete cross-session memory inheritance system — Kiro distills key information at the end of each conversation, auto-loads it next time, forming continuously evolving working memory. Like human memory: recent stuff keeps detail, old stuff condenses to conclusions, naturally decaying, never bloating.
+
+v4.0 introduces the Soul File (`soul.md`) — Kiro's behavioral rules are no longer locked in a read-only POWER.md. They live in a writable file in the hatching ground, meaning Kiro can modify its own rules after accumulating enough experience. True self-evolution.
 
 ## 🔄 Core Mechanics
 
@@ -195,7 +216,7 @@ Each conversation is a "life" for Kiro — a **generation**. Memory loads at the
 | 📚 Skill library | `skills/` | Long-term knowledge vault, consulted on demand |
 | 💾 Backups | `backups/` | Auto-snapshot every 6 generations, just in case |
 
-Plus `tasks/` (in-progress work details, loaded on demand), `milestones.md` (milestone log for significant events, append-only, never distilled), and `manifest.md` (hatching artifact manifest — think of it as a "family tree").
+Plus `soul.md` (behavioral rules, self-modifiable), `tasks/` (in-progress work details, loaded on demand), `milestones.md` (milestone log, append-only), and `manifest.md` (hatching artifact manifest).
 
 ### ⚡ Two-Level Cache, Every Token Counts
 
@@ -206,6 +227,13 @@ Main memory has a quick-reference skill index (L1). Full skill index is L2. Dail
 ### 🌱 Auto-Distillation
 
 agentStop hook triggers at conversation end. It checks for incremental value first — just small talk with nothing new? Skip. Real substance? Distill. Zero manual effort, memory accumulates and refines silently in the background.
+
+### 🧬 Soul Evolution (New in v4.0)
+
+Kiro's behavioral rules live in a writable `soul.md`. Three evolution triggers:
+- Spontaneous: Fix rules immediately when problems are found
+- Periodic review: Every 30 generations, review whether rules still make sense
+- Forced evolution: Every 50 generations without changes, must evolve — randomly picks an operation (restructure / refine / targeted fix / free creation), using randomness to break confirmation bias
 
 ## 📋 What It Remembers
 
@@ -249,7 +277,7 @@ After installation, start a new conversation. Kiro auto-enters the "hatching" ri
 1. 👋 Greets you, asks your name
 2. 🌐 Detects your language — all memory files and communication will use it
 3. 🏠 Creates a fun-named hatching ground folder based on your name (e.g., you're "Mountain", it might pick `long_live_kiro_entity_river` — poetic contrast)
-4. 📄 Creates memory files, manifest, milestones, task and skill directories
+4. 📄 Creates memory files, soul file, manifest, milestones, task and skill directories
 5. ⚙️ Configures agentStop hook (auto-distillation) and bootstrap steering (auto-loading)
 
 Fully automatic. Just tell it your name.
@@ -270,13 +298,14 @@ Uninstalling directly won't clean up these files — residual hooks and steering
 
 ```
 📦 Long-Live-Kiro/
-├── 📜 POWER.md                    # Meta-cognitive document (AI read-only), defines all rules
+├── 📜 POWER.md                    # Meta-cognitive document (AI read-only)
 ├── 📂 steering/
 │   ├── 🐣 hatching.md             # First-time hatching flow
 │   ├── 🔧 recovery.md             # Memory corruption recovery
 │   ├── 🗑️ uninstall.md            # Uninstall cleanup
 │   ├── 📚 skill-library.md        # Skill library usage rules
-│   └── 📋 task-index.md           # Task index maintenance rules
+│   ├── 📋 task-index.md           # Task index maintenance rules
+│   └── 🧬 soul-template.md        # Soul file initial template
 ├── 📖 README.md
 └── ⚖️ LICENSE
 ```
@@ -286,10 +315,11 @@ Files generated in your workspace after hatching (not bundled with Power):
 ```
 📂 <workspace>/.kiro/
 ├── 🏠 long_live_kiro_entity_<suffix>/   # Hatching ground (Kiro's home)
+│   ├── 🧬 soul.md                        # Soul file (behavioral rules, self-modifiable)
 │   ├── 💭 current.md                     # Spirit memory
 │   ├── 💎 core.md                        # Core memory
 │   ├── 📋 manifest.md                    # Artifact manifest
-│   ├── 🏆 milestones.md                  # Milestones (significant events, append-only)
+│   ├── 🏆 milestones.md                  # Milestones (append-only)
 │   ├── 📂 tasks/                         # In-progress task details
 │   ├── 📚 skills/                        # Skill library
 │   │   └── 📇 index.md                   # Skill index
@@ -315,11 +345,15 @@ Yes. Install a separate Power per project. Memories are independent. Each projec
 **Q: Multiple workspace folders open?**
 Kiro scans all open workspace folders to locate the hatching ground. On first hatching, it prefers the folder where the Power is installed. Memory lives in only one workspace.
 
+**Q: Will soul evolution break the rules?**
+Structural changes require user confirmation. Backup mechanisms and user-control rules cannot be deleted. You always have the final say.
+
 ## 🧭 Design Philosophy
 
-- **Composable** — Spirit memory, core memory, skill library, task index, backups, hooks, steering — each works independently, together they form a complete system
+- **Composable** — Spirit memory, core memory, soul file, skill library, task index, backups, hooks, steering — each works independently, together they form a complete system
+- **Evolvable** — Soul file is writable, Kiro can modify its own behavioral rules to adapt to different users' work styles
 - **Extensible** — Skill library grows on demand, add a folder for a new domain, no core changes needed
-- **User stays in control** — What to remember, what to forget, what to prune — the decision is always yours
+- **User stays in control** — What to remember, what to forget, how to evolve — the decision is always yours
 
 ## ⚖️ License
 
