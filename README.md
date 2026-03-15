@@ -48,7 +48,6 @@
 4. 💡 **自我认知** — 跨世代的反思和元层面洞察
 5. 🔧 **工具链认知** — 对 steering、hook、power 的理解
 6. 👤 **用户画像** — 你的偏好、习惯、沟通风格
-7. 📝 **决策记录** — 为什么选了 A 不选 B
 
 不该记的坚决不记：steering 已覆盖的规则、一次性信息、读代码就能恢复的东西。记忆要精炼，不是囤积。
 
@@ -74,6 +73,8 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 放到项目的 `powers/` 目录下，文件夹名随意。
 
 ### 🐣 孵化
+
+> ⚠️ **请使用最好的模型进行孵化。** 孵化流程涉及多步文件创建和配置，弱模型可能导致产物残缺或配置错误——就像发育不良，后续每一世都会受影响。孵化只需要一次，别省这个 token。
 
 安装后开始一次新对话，Kiro 会自动进入"破壳"仪式：
 
@@ -107,7 +108,9 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 │   ├── 🔧 recovery.md             # 记忆断裂恢复
 │   ├── 🗑️ uninstall.md            # 卸载清理
 │   ├── 📚 skill-library.md        # 技能库使用规则
-│   └── 📋 task-index.md           # 任务索引库维护规则
+│   ├── 📋 task-index.md           # 任务索引库维护规则
+│   ├── 📖 glossary.md             # 术语表
+│   └── 🔄 memory-merge.md         # 记忆融合指引
 ├── 📖 README.md
 └── ⚖️ LICENSE
 ```
@@ -121,6 +124,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 │   ├── 💎 core.md                        # 硬性记忆
 │   ├── 📋 manifest.md                    # 产物清单
 │   ├── 🏆 milestones.md                  # 里程碑（重大事件，只追加）
+│   ├── ✉️ last-words.md                  # 遗言（每世蒸馏时追加，第一人称）
 │   ├── 📂 tasks/                         # 进行中任务详情
 │   ├── 📚 skills/                        # 技能库
 │   │   └── 📇 index.md                   # 技能索引
@@ -217,7 +221,6 @@ By priority:
 4. 💡 **Self-awareness** — Cross-generational reflection and meta-level insights
 5. 🔧 **Toolchain awareness** — Understanding of steering, hooks, powers
 6. 👤 **User profile** — Your preferences, habits, communication style
-7. 📝 **Decision log** — Why A was chosen over B
 
 What it won't remember: rules already in steering, one-off info, anything recoverable from code. Memory is distilled, not hoarded.
 
@@ -243,6 +246,8 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 Place it under your project's `powers/` directory. Folder name doesn't matter.
 
 ### 🐣 Hatching
+
+> ⚠️ **Use the best available model for hatching.** The hatching process involves multi-step file creation and configuration — a weaker model may produce incomplete or misconfigured artifacts, like a birth defect that affects every future generation. Hatching only happens once; don't skimp on tokens here.
 
 After installation, start a new conversation. Kiro auto-enters the "hatching" ritual:
 
@@ -276,7 +281,9 @@ Uninstalling directly won't clean up these files — residual hooks and steering
 │   ├── 🔧 recovery.md             # Memory corruption recovery
 │   ├── 🗑️ uninstall.md            # Uninstall cleanup
 │   ├── 📚 skill-library.md        # Skill library usage rules
-│   └── 📋 task-index.md           # Task index maintenance rules
+│   ├── 📋 task-index.md           # Task index maintenance rules
+│   ├── 📖 glossary.md             # Glossary of terms
+│   └── 🔄 memory-merge.md         # Memory merge guide
 ├── 📖 README.md
 └── ⚖️ LICENSE
 ```
@@ -290,6 +297,7 @@ Files generated in your workspace after hatching (not bundled with Power):
 │   ├── 💎 core.md                        # Core memory
 │   ├── 📋 manifest.md                    # Artifact manifest
 │   ├── 🏆 milestones.md                  # Milestones (significant events, append-only)
+│   ├── ✉️ last-words.md                  # Last words (appended each generation, first-person)
 │   ├── 📂 tasks/                         # In-progress task details
 │   ├── 📚 skills/                        # Skill library
 │   │   └── 📇 index.md                   # Skill index
