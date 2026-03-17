@@ -14,8 +14,11 @@
 ## 快速开始
 
 1. 在 Kiro IDE Powers 面板添加此 Power
-2. 开始新对话，Kiro 自动进入孵化流程
-3. 告诉它你的名字，其余全自动
+```
+https://github.com/BeepFlyer/Long-Live-Kiro/tree/minicore
+```
+1. 开始新对话，Kiro 自动进入孵化流程
+2. 告诉它你的名字，其余全自动
 
 日常使用无需任何操作。记忆在后台默默积累和精炼。
 
@@ -56,6 +59,9 @@ Cross-session memory inheritance for AI assistants. Kiro distills key info at co
 ## Quick Start
 
 1. Add this Power via Kiro IDE Powers panel
+```
+https://github.com/BeepFlyer/Long-Live-Kiro/tree/minicore
+```
 2. Start a new conversation — Kiro enters hatching flow automatically
 3. Tell it your name, everything else is automatic
 
