@@ -24,7 +24,6 @@
 
 孵化地之外：
 - `<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md` — 指路牌（始终包含）
-- `<WORKSPACE_ROOT>/.kiro/hooks/soul-memory-save.kiro.hook` — 存档按钮（userTriggered）
 
 **双文件模型**：current.md 存高频变化的工作状态，identity.md 存低频变化的身份信息。分界线：**"会不会因为一次对话而改变？"** 会 → current，不会 → identity。
 
@@ -320,4 +319,4 @@ E. 学习式进化  — 引入外部参照系，提取洞察
 - 版本号：微调 +0.1，结构性变更 +1.0
 - 微调直接改；结构性变更先告知用户
 - **不可删除项**：备份机制、用户控制权相关规则
-- **基础设施同步**：修改后检查 hook prompt、bootstrap steering、identity.md 增强件状态
+- **基础设施同步**：修改后检查 bootstrap steering、identity.md 增强件状态

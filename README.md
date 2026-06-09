@@ -49,7 +49,7 @@ Kiro 可以拥有多个"知识身份"——不是角色扮演，是领域知识�
 
 不是每次对话结束都自动蒸馏——那会打断心流。
 
-- 你觉得这次对话有价值 → 说"存档"（或点击存档按钮）
+- 你觉得这次对话有价值 → 说"存档"
 - Kiro 快速写一条备忘到缓冲区（3-5 行，几秒完成）
 - 备忘积累到阈值 → 自动触发蒸馏（融合所有备忘，重写工作记忆）
 - 没存档就走了？下次继续。增量会丢失，但这是你的选择
@@ -113,7 +113,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 2. 🌐 识别你使用的语言
 3. 🏠 根据你的名字创建一个有趣味的孵化地文件夹
 4. 📄 创建全套记忆文件（soul + current + identity + core + memo + 技能库 + 任务库）
-5. ⚙️ 配置 bootstrap steering（自动加载）和存档按钮
+5. ⚙️ 配置 bootstrap steering（自动加载）
 
 全程自动，你只需要告诉它你叫什么。
 
@@ -121,7 +121,7 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 
 - 每次对话开始 → 记忆自动加载，Kiro 记得你是谁、在做什么
 - 对话过程中 → 正常工作，Kiro 内部跟踪增量
-- 想保存记忆时 → 说"存档"或点击存档按钮
+- 想保存记忆时 → 说"存档"
 - 什么都不做也行 → 下次再存
 
 ### 🗑️ 卸载
@@ -145,11 +145,11 @@ git clone https://github.com/BeepFlyer/Long-Live-Kiro.git
 │   ├── 📚 skill-library.md        # 技能库使用规则
 │   ├── 📋 task-index.md           # 任务索引库维护规则
 │   ├── 📖 glossary.md             # 术语表
-│   └── 🔄 memory-merge.md         # 记忆融合指引
+│   ├── 🔄 memory-merge.md         # 记忆融合指引
+│   └── ✉️ kiro-readme.md          # Kiro 写给 Kiro 的信
 ├── 📂 tools/
 │   └── 🐍 memo_check.py           # 备忘字数检查工具
 ├── 📖 README.md
-├── ✉️ KIRO_README.md              # Kiro 写给 Kiro 的信
 └── ⚖️ LICENSE
 ```
 
@@ -269,7 +269,7 @@ Kiro can have multiple "knowledge identities" — not role-playing, but on-deman
 
 No forced auto-distillation — that breaks flow.
 
-- Conversation had value? → Say "save" (or click the save button)
+- Conversation had value? → Say "save"
 - Kiro writes a quick memo to buffer (3-5 lines, seconds)
 - Buffer reaches threshold → auto-triggers distillation (merges all memos, rewrites memory)
 - Left without saving? Next time. Increments lost, but that's your choice
@@ -327,7 +327,7 @@ After installation, start a new conversation. Kiro auto-enters the "hatching" ri
 2. 🌐 Detects your language
 3. 🏠 Creates a creatively-named hatching ground folder
 4. 📄 Creates full memory suite (soul + current + identity + core + memo + skills + tasks)
-5. ⚙️ Configures bootstrap steering and save button
+5. ⚙️ Configures bootstrap steering (auto-loading)
 
 Fully automatic. Just tell it your name.
 
@@ -335,7 +335,7 @@ Fully automatic. Just tell it your name.
 
 - Conversation starts → memory auto-loads, Kiro knows who you are
 - During conversation → normal work, Kiro tracks increments internally
-- Want to save → say "save" or click the save button
+- Want to save → say "save"
 - Do nothing → that's fine too, save next time
 
 ### 🗑️ Uninstall
@@ -349,11 +349,10 @@ Tell Kiro "help me uninstall the memory system." It cleans up steering and memor
 ```
 📦 Long-Live-Kiro/
 ├── 📜 POWER.md                    # Meta-cognitive document (AI read-only)
-├── 📂 steering/                   # Operational guides (8 files)
+├── 📂 steering/                   # Operational guides (9 files)
 ├── 📂 tools/
 │   └── 🐍 memo_check.py           # Memo threshold checker
 ├── 📖 README.md
-├── ✉️ KIRO_README.md              # Letter from Kiro to Kiro
 └── ⚖️ LICENSE
 ```
 

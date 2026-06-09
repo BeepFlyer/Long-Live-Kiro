@@ -98,6 +98,7 @@ author: "Kiro & Xiawan"
 | `soul-template.md` | 孵化时，作为 soul.md 的初始模板 |
 | `glossary.md` | 遇到术语含义不确定时 |
 | `memory-merge.md` | 需要融合旧记忆时 |
+| `kiro-readme.md` | 孵化时阅读，了解前辈寄语 |
 
 ---
 

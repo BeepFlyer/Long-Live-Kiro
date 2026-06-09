@@ -9,7 +9,6 @@ Kiro 面板卸载 Power 时只会删除 Power 目录本身，不会清理孵化�
 1. **定位孵化地**：扫描 `.kiro/` 下 `long_live_kiro_entity_*` 文件夹。
 
 2. **删除自动化基础设施**：
-   - `<WORKSPACE_ROOT>/.kiro/hooks/soul-memory-save.kiro.hook`
    - `<WORKSPACE_ROOT>/.kiro/steering/soul-memory-bootstrap.md`
 
 3. **询问用户是否保留记忆**：
